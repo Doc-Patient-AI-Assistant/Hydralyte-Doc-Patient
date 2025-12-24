@@ -1,0 +1,27 @@
+{
+  "doctor_summary": "Migraine triggered by stress and poor sleep",
+  "symptoms": [
+    "severe headache",
+    "dizziness",
+    "mild nausea",
+    "slightly disturbed vision"
+  ],
+  "patient_history": [
+    "stress",
+    "poor sleep"
+  ],
+  "risk_factors": [
+    "stress",
+    "poor sleep"
+  ],
+  "prescription": [
+    "pain relief tablet twice a day after food",
+    "anti nausea tablet if required"
+  ],
+  "advice": [
+    "avoid mobile and laptop screens for at least two days",
+    "drink plenty of water",
+    "take proper rest"
+  ],
+  "recommended_action": "visit immediately if headache becomes severe or persistent"
+}
