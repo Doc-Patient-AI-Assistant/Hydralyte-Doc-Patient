@@ -1,2 +1,15 @@
 .env
 backend/.env
+
+# Python
+venv/
+**/venv/
+**/__pycache__/
+
+# Frontend
+frontend/
+**/frontend/
+
+# Node
+node_modules/
+dist/

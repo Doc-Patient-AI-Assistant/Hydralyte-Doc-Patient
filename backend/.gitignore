@@ -1,0 +1,13 @@
+# Backend environment
+.env
+venv/
+__pycache__/
+
+# Runtime generated files
+uploads/
+processed/
+transcripts/
+summaries/
+pdfs/
+status.json
+bluetooth_inbox/

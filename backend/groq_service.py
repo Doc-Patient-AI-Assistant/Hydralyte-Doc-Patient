@@ -1,6 +1,5 @@
 import os
 import json
-import re
 from dotenv import load_dotenv
 from groq import Groq
 
@@ -12,6 +11,19 @@ load_dotenv()
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 # ===============================
+# SAFE JSON EXTRACTOR
+# ===============================
+def extract_json(text: str) -> dict:
+    start = text.find("{")
+    end = text.rfind("}")
+
+    if start == -1 or end == -1 or end <= start:
+        raise RuntimeError(f"Invalid LLM output:\n{text}")
+
+    snippet = text[start:end + 1]
+    return json.loads(snippet)
+
+# ===============================
 # LLAMA SUMMARY
 # ===============================
 def generate_summary(transcript_json: dict) -> dict:
@@ -19,6 +31,7 @@ def generate_summary(transcript_json: dict) -> dict:
 
     convo = []
     chars = 0
+
     for u in utterances:
         line = f"{u['speaker']}: {u['text']}\n"
         chars += len(line)
@@ -62,13 +75,15 @@ Conversation:
 
     raw = response.choices[0].message.content.strip()
 
-    # ---- HARD JSON EXTRACTION SAFETY NET ----
+    # 🧪 DEBUG VISIBILITY (optional but extremely useful)
+    print("\n🧠 RAW LLM OUTPUT:\n", raw, "\n", flush=True)
+
+    # ===============================
+    # BULLETPROOF JSON PARSING
+    # ===============================
     try:
         data = json.loads(raw)
     except Exception:
-        match = re.search(r"\{.*\}", raw, re.DOTALL)
-        if not match:
-            raise RuntimeError(f"Invalid LLM output:\n{raw}")
-        data = json.loads(match.group())
+        data = extract_json(raw)
 
     return data
